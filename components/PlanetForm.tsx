@@ -104,7 +104,7 @@ const PlanetForm: React.FC<PlanetFormProps> = ({ stage: initialStage, onSave, on
     <div className="fixed inset-0 bg-black/95 z-[60] flex items-center justify-center p-4">
       <div className="bg-dark-card border-2 border-primary/50 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl animate-scale-in">
         <div className="sticky top-0 glass border-b border-primary/30 p-4 flex justify-between items-center z-20">
-          <h2 className="orbitron text-xl font-bold text-white uppercase">World Construction Module</h2>
+          <h2 className="orbitron text-xl font-bold text-white uppercase tracking-widest">Planet Construction Module</h2>
           <div className="space-x-4">
             <button onClick={onCancel} className="px-4 py-2 text-xs font-bold text-light-dim uppercase hover:text-white">취소</button>
             <button 

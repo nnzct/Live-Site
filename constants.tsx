@@ -7,47 +7,47 @@ export const INITIAL_STAGES: Stage[] = [
     id: '1',
     name: 'Aethelgard Prime',
     code: 'AE-001',
-    overview: 'A verdant world covered in glowing crystalline forests.',
+    overview: '빛나는 수정 숲으로 뒤덮인 신비로운 행성입니다. 지표면 전체가 에메랄드 빛 결정을 띠고 있습니다.',
     isPublished: true,
     createdAt: Date.now(),
     metadata: {
-      formationTime: '4.2 Billion Years',
-      orbit: 'Circular, 1.2 AU',
+      formationTime: '42억 년',
+      orbit: '원형 궤도, 1.2 AU',
       satellites: 2,
       gravity: '0.98g',
       diameter: '12,500 km',
       landSeaRatio: '40:60',
-      geology: 'Silicate crust with quartz veins',
-      atmosphere: { o2: 23, n2: 74, other: '3% Argon' },
-      internalStructure: 'Molten iron core',
-      rotationPeriod: '26 hours',
-      revolutionPeriod: '410 days',
-      circulationSystem: 'Double Hadley cells'
+      geology: '석영 맥이 포함된 규산염 지각',
+      atmosphere: { o2: 23, n2: 74, other: '3% 아르곤' },
+      internalStructure: '용융된 철 핵',
+      rotationPeriod: '26시간',
+      revolutionPeriod: '410일',
+      circulationSystem: '이중 해들리 순환'
     },
     zones: [
       {
         id: 'z1',
-        name: 'Crystal Shores',
+        name: '수정 해안',
         imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1200&q=80',
         hotspots: [
           {
             id: 'h1',
             x: 30,
             y: 50,
-            label: 'Strange Shimmer',
+            label: '기묘한 반짝임',
             type: 'info',
-            content: 'The sand here seems to be composed of ground emeralds.'
+            content: '이곳의 모래는 잘게 부서진 에메랄드로 구성되어 있는 것 같습니다.'
           },
           {
             id: 'h2',
             x: 70,
             y: 40,
-            label: 'Ancient Monolith',
+            label: '고대 모놀리스',
             type: 'encounter',
-            content: 'A tall obsidian pillar hums as you approach. A voice echoes in your mind.',
+            content: '검은 흑요석 기둥이 당신이 다가감에 따라 윙윙거립니다. 머릿속에서 목소리가 들려옵니다.',
             choices: [
-              { id: 'c1', text: 'Touch the surface', response: 'A surge of historical data floods your consciousness.' },
-              { id: 'c2', text: 'Back away', response: 'The humming stops, and the silence is deafening.' }
+              { id: 'c1', text: '표면을 만져본다', response: '역사적인 데이터가 당신의 의식 속으로 쏟아져 들어옵니다.' },
+              { id: 'c2', text: '뒤로 물러난다', response: '웅웅거리는 소리가 멈추고, 귀가 먹먹할 정도의 정적이 찾아옵니다.' }
             ]
           }
         ]
