@@ -18,7 +18,7 @@ const Landing: React.FC<LandingProps> = ({ onLogin }) => {
       if (adminPassword === 'didEl!2003') {
         onLogin(nickname, true);
       } else {
-        alert('ACCESS DENIED: INVALID ADMINISTRATIVE KEY');
+        alert('접근 거부: 관리자 보안 키가 일치하지 않습니다.');
       }
     } else {
       onLogin(nickname);
@@ -26,33 +26,27 @@ const Landing: React.FC<LandingProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh]">
-      <div className="relative mb-12 group">
-        <div className="absolute inset-0 bg-primary blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-        <img 
-          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
-          alt="Cosmos" 
-          className="rounded-lg shadow-2xl relative border-2 border-primary/20 max-w-2xl w-full"
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 rounded-lg">
-          <h1 className="orbitron text-7xl font-black text-white tracking-[0.2em] mb-4">L.I.F.E.</h1>
-          <p className="text-primary-light uppercase tracking-[0.3em] text-xs font-bold">Life Index For Evaluation</p>
-        </div>
+    <div className="flex flex-col items-center justify-center min-h-[80vh]">
+      <div className="relative mb-16 text-center">
+        <div className="absolute inset-0 bg-primary blur-[100px] opacity-10"></div>
+        <h1 className="orbitron text-8xl font-black text-white tracking-[0.2em] mb-4 relative">L.I.F.E.</h1>
+        <p className="text-primary-light uppercase tracking-[0.4em] text-sm font-bold relative">Life Index For Evaluation</p>
+        <p className="text-light-dim text-xs mt-6 tracking-widest relative">심우주 탐사 및 생명 지표 평가 시스템</p>
       </div>
 
-      <div className="w-full max-w-md glass p-8 rounded-xl border border-secondary/30">
-        <h2 className="orbitron text-2xl text-center mb-8 text-light font-bold">IDENTITY AUTHENTICATION</h2>
+      <div className="w-full max-w-md glass p-10 rounded-xl border border-secondary/30 shadow-2xl">
+        <h2 className="orbitron text-xl text-center mb-8 text-light font-bold tracking-widest">신원 인증</h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs uppercase tracking-widest text-light-dim mb-2">Explorer Nickname</label>
+            <label className="block text-[10px] uppercase tracking-widest text-light-dim mb-2">탐사원 닉네임</label>
             <input 
               type="text" 
               required
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="w-full bg-dark border-b-2 border-secondary focus:border-primary outline-none py-2 px-4 text-light transition-colors"
-              placeholder="ENTER NICKNAME..."
+              className="w-full bg-dark border-b border-secondary focus:border-primary outline-none py-3 px-4 text-light transition-colors"
+              placeholder="닉네임을 입력하세요..."
             />
           </div>
 
@@ -62,30 +56,30 @@ const Landing: React.FC<LandingProps> = ({ onLogin }) => {
               id="adminMode" 
               checked={isAdminMode} 
               onChange={() => setIsAdminMode(!isAdminMode)}
-              className="accent-primary"
+              className="accent-primary w-4 h-4"
             />
-            <label htmlFor="adminMode" className="text-xs uppercase tracking-widest text-light-dim cursor-pointer">Administrative Access</label>
+            <label htmlFor="adminMode" className="text-[10px] uppercase tracking-widest text-light-dim cursor-pointer select-none">관리자 권한으로 접속</label>
           </div>
 
           {isAdminMode && (
             <div className="animate-fade-in">
-              <label className="block text-xs uppercase tracking-widest text-light-dim mb-2">Security Key</label>
+              <label className="block text-[10px] uppercase tracking-widest text-light-dim mb-2">보안 키</label>
               <input 
                 type="password" 
                 required
                 value={adminPassword}
                 onChange={(e) => setAdminPassword(e.target.value)}
-                className="w-full bg-dark border-b-2 border-secondary focus:border-primary outline-none py-2 px-4 text-light transition-colors"
-                placeholder="PASSWORD..."
+                className="w-full bg-dark border-b border-secondary focus:border-primary outline-none py-3 px-4 text-light transition-colors"
+                placeholder="관리자 암호 입력..."
               />
             </div>
           )}
 
           <button 
             type="submit"
-            className="w-full py-4 bg-primary hover:bg-primary-dark text-white orbitron font-bold tracking-widest transition-all rounded shadow-lg shadow-primary/20"
+            className="w-full py-4 bg-primary hover:bg-primary-dark text-white orbitron font-bold tracking-widest transition-all rounded shadow-lg shadow-primary/20 mt-4"
           >
-            INITIATE VOYAGE
+            항해 시작
           </button>
         </form>
       </div>

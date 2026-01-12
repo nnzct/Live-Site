@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ user, currentView, onNavigate, onLogout
           onClick={() => onNavigate('list')}
           className={`flex items-center space-x-1 hover:text-primary transition-colors ${currentView === 'list' ? 'text-primary' : 'text-light'}`}
         >
-          <span className="text-sm font-semibold uppercase tracking-wider">Explore</span>
+          <span className="text-sm font-semibold uppercase tracking-wider">행성 탐사</span>
         </button>
 
         {user.isAdmin && (
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ user, currentView, onNavigate, onLogout
             onClick={() => onNavigate('admin')}
             className={`flex items-center space-x-1 hover:text-primary transition-colors ${currentView === 'admin' ? 'text-primary' : 'text-light'}`}
           >
-            <span className="text-sm font-semibold uppercase tracking-wider">Control</span>
+            <span className="text-sm font-semibold uppercase tracking-wider">관리자 제어</span>
           </button>
         )}
 
@@ -46,14 +46,14 @@ const Header: React.FC<HeaderProps> = ({ user, currentView, onNavigate, onLogout
           onClick={() => onNavigate('profile')}
           className={`flex items-center space-x-1 hover:text-primary transition-colors ${currentView === 'profile' ? 'text-primary' : 'text-light'}`}
         >
-          <span className="text-sm font-semibold uppercase tracking-wider">Terminal ({user.nickname})</span>
+          <span className="text-sm font-semibold uppercase tracking-wider">개인 터미널 ({user.nickname})</span>
         </button>
 
         <button 
           onClick={onLogout}
           className="px-4 py-1 border border-primary/50 text-primary hover:bg-primary hover:text-white rounded transition-all text-xs font-bold uppercase"
         >
-          Sign Out
+          로그아웃
         </button>
       </nav>
     </header>
