@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Stage, ExplorationLog } from './types';
 import { INITIAL_STAGES } from './constants';
 import Header from './components/Header';
@@ -13,14 +13,13 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [stages, setStages] = useState<Stage[]>([]);
   const [logs, setLogs] = useState<ExplorationLog[]>([]);
-  const [currentView, setCurrentView] = useState<'home' | 'list' | 'explorer' | 'admin' | 'profile'>('home');
+  const [currentView, setCurrentView] = useState<'list' | 'explorer' | 'admin' | 'profile'>('list');
   const [selectedStageId, setSelectedStageId] = useState<string | null>(null);
 
-  // Persistence logic (Simulation of concurrent site)
   useEffect(() => {
-    const savedStages = localStorage.getItem('life_stages');
-    const savedLogs = localStorage.getItem('life_logs');
-    const savedUser = localStorage.getItem('life_user');
+    const savedStages = localStorage.getItem('life_stages_v2');
+    const savedLogs = localStorage.getItem('life_logs_v2');
+    const savedUser = localStorage.getItem('life_user_v2');
 
     if (savedStages) setStages(JSON.parse(savedStages));
     else setStages(INITIAL_STAGES);
@@ -30,31 +29,27 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (stages.length > 0) localStorage.setItem('life_stages', JSON.stringify(stages));
-    localStorage.setItem('life_logs', JSON.stringify(logs));
+    if (stages.length > 0) localStorage.setItem('life_stages_v2', JSON.stringify(stages));
+    localStorage.setItem('life_logs_v2', JSON.stringify(logs));
   }, [stages, logs]);
 
   const handleLogin = (nickname: string, isAdmin: boolean = false) => {
     const newUser = { nickname, isAdmin };
     setUser(newUser);
-    localStorage.setItem('life_user', JSON.stringify(newUser));
+    localStorage.setItem('life_user_v2', JSON.stringify(newUser));
     setCurrentView(isAdmin ? 'admin' : 'list');
   };
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('life_user');
-    setCurrentView('home');
-  };
-
-  const updateStages = (newStages: Stage[]) => {
-    setStages(newStages);
+    localStorage.removeItem('life_user_v2');
+    setCurrentView('list');
   };
 
   const addLog = (stageId: string, content: string) => {
     if (!user) return;
     const newLog: ExplorationLog = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: Date.now().toString(),
       stageId,
       nickname: user.nickname,
       content,
@@ -71,65 +66,66 @@ const App: React.FC = () => {
     setLogs(prev => prev.map(l => l.id === logId ? { ...l, content: newContent } : l));
   };
 
-  const openExplorer = (stageId: string) => {
-    setSelectedStageId(stageId);
-    setCurrentView('explorer');
-  };
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col selection:bg-primary selection:text-white">
       {user && (
         <Header 
           user={user} 
           currentView={currentView}
-          onNavigate={setCurrentView} 
+          onNavigate={(view) => setCurrentView(view)} 
           onLogout={handleLogout} 
         />
       )}
 
-      <main className="flex-grow container mx-auto px-4 py-8">
-        {!user && <Landing onLogin={handleLogin} />}
-        
-        {user && currentView === 'list' && (
-          <PlanetList 
-            stages={stages.filter(s => s.isPublished || user.isAdmin)} 
-            onSelect={openExplorer} 
-          />
-        )}
+      <main className="flex-grow container mx-auto px-6 py-10">
+        {!user ? (
+          <Landing onLogin={handleLogin} />
+        ) : (
+          <>
+            {currentView === 'list' && (
+              <PlanetList 
+                stages={stages.filter(s => s.isPublished || user.isAdmin)} 
+                onSelect={(id) => { setSelectedStageId(id); setCurrentView('explorer'); }} 
+              />
+            )}
 
-        {user && currentView === 'explorer' && selectedStageId && (
-          <Explorer 
-            stage={stages.find(s => s.id === selectedStageId)!} 
-            logs={logs.filter(l => l.stageId === selectedStageId)}
-            user={user}
-            onAddLog={addLog}
-            onDeleteLog={deleteLog}
-            onEditLog={editLog}
-            onBack={() => setCurrentView('list')}
-          />
-        )}
+            {currentView === 'explorer' && selectedStageId && (
+              <Explorer 
+                stage={stages.find(s => s.id === selectedStageId)!} 
+                logs={logs.filter(l => l.stageId === selectedStageId)}
+                user={user}
+                onAddLog={addLog}
+                onDeleteLog={deleteLog}
+                onEditLog={editLog}
+                onBack={() => setCurrentView('list')}
+              />
+            )}
 
-        {user && currentView === 'admin' && user.isAdmin && (
-          <AdminDashboard 
-            stages={stages} 
-            onUpdateStages={updateStages} 
-          />
-        )}
+            {currentView === 'admin' && user.isAdmin && (
+              <AdminDashboard 
+                stages={stages} 
+                onUpdateStages={setStages} 
+              />
+            )}
 
-        {user && currentView === 'profile' && (
-          <ProfilePage 
-            user={user} 
-            logs={logs.filter(l => l.nickname === user.nickname)}
-            stages={stages}
-            onDeleteLog={deleteLog}
-            onEditLog={editLog}
-            onVisitStage={openExplorer}
-          />
+            {currentView === 'profile' && (
+              <ProfilePage 
+                user={user} 
+                logs={logs.filter(l => l.nickname === user.nickname)}
+                stages={stages}
+                onDeleteLog={deleteLog}
+                onEditLog={editLog}
+                onVisitStage={(id) => { setSelectedStageId(id); setCurrentView('explorer'); }}
+              />
+            )}
+          </>
         )}
       </main>
 
-      <footer className="py-6 text-center text-light-dim text-sm border-t border-dark-card glass mt-auto uppercase tracking-widest font-mono">
-        &copy; 202X L.I.F.E. - LIFE INDEX FOR EVALUATION. ALL RIGHTS RESERVED.
+      <footer className="py-8 border-t border-dark-card glass text-center">
+        <p className="orbitron text-[10px] tracking-[0.4em] text-light-dim">
+          &copy; 202X L.I.F.E. - LIFE INDEX FOR EVALUATION. ALL RIGHTS RESERVED.
+        </p>
       </footer>
     </div>
   );
