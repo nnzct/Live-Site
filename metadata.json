@@ -1,0 +1,7 @@
+{
+  "name": "L.I.F.E. (Life Index For Evaluation)",
+  "description": "Life Index For Evaluation: A deep-space exploration point-and-click game where admins craft alien worlds and users document their discoveries in a shared universe.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
