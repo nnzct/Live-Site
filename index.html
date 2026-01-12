@@ -43,19 +43,25 @@
             margin: 0;
             line-height: 1.6;
             overflow-x: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
         }
-        .glass { background: rgba(19, 23, 21, 0.85); backdrop-filter: blur(12px); }
         .orbitron { font-family: 'Orbitron', sans-serif; }
+        .glass { background: rgba(19, 23, 21, 0.85); backdrop-filter: blur(12px); }
+        .terminal-border { border: 1px solid rgba(76, 134, 122, 0.3); }
+        .active-glow { box-shadow: 0 0 15px rgba(255, 54, 0, 0.2); }
+        
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #060706; }
         ::-webkit-scrollbar-thumb { background: #ff3600; border-radius: 10px; }
-        @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-        .scanline::after {
+        
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        .scanner::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(255, 54, 0, 0.05), transparent);
-            animation: scanline 8s linear infinite;
+            left: 0; right: 0; height: 2px;
+            background: rgba(255, 54, 0, 0.4);
+            animation: scan 4s linear infinite;
+            z-index: 10;
             pointer-events: none;
         }
     </style>
